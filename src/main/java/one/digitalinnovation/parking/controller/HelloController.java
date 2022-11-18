@@ -11,7 +11,7 @@ public class HelloController {
 
     @GetMapping
     public String hello() {
-        return "Hello World,  Testando Deploy automatico ";
+        return "Hello World!";
     }
 
 }
