@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 public class Parking {
 
     @Id
-    @Column(name = "id_veiculo")
     private String id;
     private String license;
     private String state;
