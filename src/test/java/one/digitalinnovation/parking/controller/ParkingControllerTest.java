@@ -19,10 +19,7 @@ class ParkingControllerTest {
     private int randomPort;
 
     @BeforeEach
-    public void setUpTest() {
-        System.out.println(randomPort);
-        RestAssured.port = randomPort;
-    }
+    public void setUpTest() { RestAssured.port = randomPort; }
 
     @Test
     void whenFindAllThenCheckResult() {

@@ -14,9 +14,10 @@ public class ParkingService {
     private static Map<String, Parking> parkingMap = new HashMap<>();
 
     // Incializando com dados mocados para teste antes de criação do banco de dados
-   /* static {
-        var id  = getUUID();
+    /*static {
+        var id  = "1";
         Parking parking = new Parking(id, "OMS-1111", "BA", "BMW X1", "BRANCA");
+        parking.setEntryDate(LocalDateTime.of(2022, 11, 19, 20, 36));
         parkingMap.put(id, parking);
     }*/
 
@@ -55,6 +56,13 @@ public class ParkingService {
 
     }
 
+    public Parking checkOut(String id) {
+        Parking parking = findById(id);
+        parking.setExitDate(LocalDateTime.now());
+        parking.setBill(ParkingCheckOut.getBill(parking));
+        return parking;
+    }
+
     // Metodo para gerar id
     private static String getUUID() {
         return UUID.randomUUID().toString().replace("-","");
@@ -62,10 +70,7 @@ public class ParkingService {
     }
 
 
-    public Parking exit(String id) {
-        // Recuperar o estacionado
-        // atualizar data de saida
-        // calcular o valor
-        return null;
-    }
+
+
+
 }
