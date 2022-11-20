@@ -14,11 +14,11 @@ public class ParkingService {
     private static Map<String, Parking> parkingMap = new HashMap<>();
 
     // Incializando com dados mocados para teste antes de criação do banco de dados
-    static {
+   /* static {
         var id  = getUUID();
         Parking parking = new Parking(id, "OMS-1111", "BA", "BMW X1", "BRANCA");
         parkingMap.put(id, parking);
-    }
+    }*/
 
     // Retorna todos os veículos
     public List<Parking> findAll() {
