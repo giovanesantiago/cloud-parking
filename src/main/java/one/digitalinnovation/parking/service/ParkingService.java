@@ -16,11 +16,8 @@ public class ParkingService {
     // Incializando com dados mocados para teste antes de criação do banco de dados
     static {
         var id  = getUUID();
-        var id1  = getUUID();
-        Parking parking = new Parking(id, "OMS-1111", "sc", "CELTA", "PRETO");
-        Parking parking1 = new Parking(id1, "JPA-1G11", "BA", "BMW X1", "BRANCA");
+        Parking parking = new Parking(id, "OMS-1111", "BA", "BMW X1", "BRANCA");
         parkingMap.put(id, parking);
-        parkingMap.put(id1, parking1);
     }
 
     // Retorna todos os veículos
@@ -65,5 +62,10 @@ public class ParkingService {
     }
 
 
-
+    public Parking exit(String id) {
+        // Recuperar o estacionado
+        // atualizar data de saida
+        // calcular o valor
+        return null;
+    }
 }
