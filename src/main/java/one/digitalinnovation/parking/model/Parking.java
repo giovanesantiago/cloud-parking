@@ -1,6 +1,7 @@
 package one.digitalinnovation.parking.model;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 public class Parking {
 
     @Id
+    @Column(name = "id_veiculo")
     private String id;
     private String license;
     private String state;
