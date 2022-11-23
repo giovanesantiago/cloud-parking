@@ -15,23 +15,23 @@ public class ParkingCheckOut {
 
     private static Double getBill(LocalDateTime entryDate, LocalDateTime exitDate) {
         // Armazenando a diferença de tempo ENTRADA/SAIDA em minutos
-        Long tempoEstacionamentoMinutos = entryDate.until(exitDate, ChronoUnit.MINUTES);
+        Long tempoEstacionadoMinutos = entryDate.until(exitDate, ChronoUnit.MINUTES);
         Double bill = 0.0;
 
-        if (tempoEstacionamentoMinutos <= ONE_HOUR) return ONE_HOUR_VALUE;
+        if (tempoEstacionadoMinutos <= ONE_HOUR) return ONE_HOUR_VALUE;
 
-        if (tempoEstacionamentoMinutos <= TWENTY_FOUR_HOUR){
+        if (tempoEstacionadoMinutos <= TWENTY_FOUR_HOUR){
             bill = ONE_HOUR_VALUE;
-            int tempoEstacionamentohoras = (int) (tempoEstacionamentoMinutos / ONE_HOUR);
+            int tempoEstacionadohoras = (int) (tempoEstacionadoMinutos / ONE_HOUR);
 
-            for (int i = 0; i < tempoEstacionamentohoras; i++) {
+            for (int i = 0; i < tempoEstacionadohoras; i++) {
                 bill += ADDITIONAL_PER_HOUR_VALUE;
             }
             return bill;
         }
 
-        int tempoEstacionamentoDias = (int) (tempoEstacionamentoMinutos / TWENTY_FOUR_HOUR);
-        for (int i = 0; i < tempoEstacionamentoDias; i++) {
+        int tempoEstacionadoDias = (int) (tempoEstacionadoMinutos / TWENTY_FOUR_HOUR);
+        for (int i = 0; i < tempoEstacionadoDias; i++) {
             bill += DAY_VALUE;
         }
         return bill;

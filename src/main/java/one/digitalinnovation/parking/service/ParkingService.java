@@ -2,7 +2,12 @@ package one.digitalinnovation.parking.service;
 
 import one.digitalinnovation.parking.exception.ParkingNotFoundException;
 import one.digitalinnovation.parking.model.Parking;
+import one.digitalinnovation.parking.repository.ParkingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -11,55 +16,50 @@ import java.util.*;
 @Service
 public class ParkingService {
 
-    private static Map<String, Parking> parkingMap = new HashMap<>();
+    @Autowired
+    private ParkingRepository parkingRepository;
 
-    // Incializando com dados mocados para teste antes de criação do banco de dados
-    /*static {
-        var id  = "1";
-        Parking parking = new Parking(id, "OMS-1111", "BA", "BMW X1", "BRANCA");
-        parking.setEntryDate(LocalDateTime.of(2022, 11, 19, 20, 36));
-        parkingMap.put(id, parking);
-    }*/
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public List<Parking> findAll() { return parkingRepository.findAll(); }
 
-    // Retorna todos os veículos
-    public List<Parking> findAll() {
-        return new ArrayList<>(parkingMap.values());
-    }
-
-
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Parking findById(String id) {
-        Parking parking = parkingMap.get(id);
-        if (parking == null) {
-            throw new ParkingNotFoundException(id);
-        }
-        return parking;
+        return parkingRepository.findById(id).orElseThrow(() -> new ParkingNotFoundException(id));
     }
 
+    @Transactional
     public Parking create(Parking parkingCreate) {
         String uuid = getUUID();
         parkingCreate.setId(uuid);
         parkingCreate.setEntryDate(LocalDateTime.now());
-        parkingMap.put(uuid, parkingCreate);
+        parkingRepository.save(parkingCreate);
         return parkingCreate;
     }
 
+    @Transactional
     public void delete(String id) {
         findById(id);
-        parkingMap.remove(id);
+        parkingRepository.deleteById(id);
     }
 
+    @Transactional
     public Parking update(String id, Parking parkingCreate) {
         Parking parking = findById(id);
         parking.setColor(parkingCreate.getColor());
-        parkingMap.replace(id, parking);
+        parking.setState(parkingCreate.getState());
+        parking.setModel(parkingCreate.getModel());
+        parking.setLicense(parkingCreate.getLicense());
+        parkingRepository.save(parking);
         return parking;
 
     }
 
+    @Transactional
     public Parking checkOut(String id) {
         Parking parking = findById(id);
         parking.setExitDate(LocalDateTime.now());
         parking.setBill(ParkingCheckOut.getBill(parking));
+        parkingRepository.save(parking);
         return parking;
     }
 
